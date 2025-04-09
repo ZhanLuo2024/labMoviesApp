@@ -7,6 +7,8 @@ import ImageListItem from "@mui/material/ImageListItem";
 import MovieDetails from "../components/movieDetails";
 import MovieHeader from "../components/headerMovie";
 import { MovieDetailsProps, MovieImage } from "../types/interfaces";
+import { getMovie, getMovieImages } from "../api/tmdb-api";
+
 
 const styles = {
   imageListRoot: {
@@ -26,16 +28,17 @@ const MovieDetailsPage: React.FC = () => {
   const [images, setImages] = useState<MovieImage[]>([]);
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`)
-      .then((res) => res.json())
-      .then((data) => setMovie(data));
+    getMovie(id ?? "").then((movie) => {
+      setMovie(movie);
+    });
   }, [id]);
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`)
-      .then((res) => res.json())
-      .then((data) => setImages(data.posters ?? []));
-  }, [id]);
+    getMovieImages(id ?? "").then((images) => {
+      setImages(images);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!movie) return <h2>Loading...</h2>;
 
