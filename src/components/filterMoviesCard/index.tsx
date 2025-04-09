@@ -32,7 +32,7 @@ interface FilterMoviesCardProps {
 }
 
 
-const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter }) => {
+const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, onUserInput }) => {
   const [genres, setGenres] = useState([{ id: '0', name: "All" }])
 
   useEffect(() => {
