@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { BaseMovieProps } from "../types/interfaces";
-import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist"; // ✅ 加這行
+import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
+import { useQuery } from "react-query"; 
+import Spinner from "../components/spinner"; 
 
 const UpcomingMoviesPage: React.FC = () => {
-  const [movies, setMovies] = useState<BaseMovieProps[]>([]);
+  const { data: movies, isLoading, isError, error } = useQuery<BaseMovieProps[], Error>(
+    ["upcoming"],           
+    getUpcomingMovies       
+  );
 
-  useEffect(() => {
-    getUpcomingMovies().then((movies) => {
-      setMovies(movies);
-    });
-  }, []);
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
 
   return (
     <PageTemplate
       title="Upcoming Movies"
-      movies={movies}
+      movies={movies || []}
       action={(movie: BaseMovieProps) => {
-        return <AddToPlaylistIcon {...movie} />; // ✅ 放這裡
+        return <AddToPlaylistIcon {...movie} />;
       }}
     />
   );
