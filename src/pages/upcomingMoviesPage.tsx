@@ -17,9 +17,12 @@ const UpcomingMoviesPage: React.FC = () => {
     <PageTemplate
       title="Upcoming Movies"
       movies={movies}
-      selectFavourite={() => {}} // 不用收藏功能時，這樣寫就好
+      action={(movie: BaseMovieProps) => {
+        return <></>; 
+      }}
     />
   );
+  
 };
 
 export default UpcomingMoviesPage;
