@@ -75,6 +75,15 @@ export const getMovie = (id: string) => {
     const json = await response.json();
     return json.results;
   };
+
+  export const getPopularMovies = async () => {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
+    );
+    const json = await res.json();
+    return json.results;
+  };
+  
   
   
   
