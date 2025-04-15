@@ -4,6 +4,7 @@ import { getPopularActors } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import ActorCard from "../components/actorCard";
 import { Typography, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const PopularActorsPage: React.FC = () => {
   const { data, isLoading, isError, error } = useQuery("popular-actors", getPopularActors);
@@ -18,7 +19,9 @@ const PopularActorsPage: React.FC = () => {
       </Typography>
       <Grid container justifyContent="center">
         {data.results.map((actor: any) => (
-          <ActorCard key={actor.id} actor={actor} />
+            <Link to={`/people/${actor.id}`}>
+                <ActorCard key={actor.id} actor={actor} />
+            </Link>
         ))}
       </Grid>
     </>

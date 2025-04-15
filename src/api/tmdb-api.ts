@@ -93,6 +93,17 @@ export const getMovie = (id: string) => {
     }
     return response.json();
   };
+
+  export const getActorDetail = async (id: string | undefined) => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/person/${id}?language=en-US&append_to_response=combined_credits&api_key=${import.meta.env.VITE_TMDB_KEY}`
+    );
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+    return response.json();
+  };
+  
   
   
   
