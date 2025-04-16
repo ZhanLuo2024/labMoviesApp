@@ -1,6 +1,6 @@
 // src/components/actorCard.tsx
 import React from "react";
-import { Card, CardHeader, CardContent, Typography, CardMedia } from "@mui/material";
+import { Card, CardContent, Typography, CardMedia } from "@mui/material";
 
 interface ActorCardProps {
   actor: {
