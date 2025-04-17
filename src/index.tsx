@@ -19,6 +19,7 @@ import CreateFantasyMoviePage from "./pages/fantasyMoviePage";
 import FantasyMovieListPage from "./pages/fantasyMovieListPage";
 import { FantasyProvider } from "./contexts/fantasyContext"; 
 import MyReviewsPage from "./pages/myReviewsPage";
+import SearchPage from "./pages/searchPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,6 +53,7 @@ const App = () => {
             <Route path="/fantasy/new" element={<CreateFantasyMoviePage />} />
             <Route path="/fantasy/list" element={<FantasyMovieListPage />} />
             <Route path="/reviews/mine" element={<MyReviewsPage />} />
+            <Route path="/search" element={<SearchPage />} />
           </Routes>
         </MoviesContextProvider>
       </FantasyProvider>
