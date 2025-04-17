@@ -8,7 +8,9 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { DEV_AUTH_TOKEN, ID_TOKEN } from "../utils/devAuthToken";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -31,33 +33,34 @@ const LoginPage: React.FC = () => {
     }
 
     try {
-      // 👉 使用開發模式 Token
-      if (DEV_AUTH_TOKEN && ID_TOKEN) {
-        console.log("🔧 Using DEV token");
-        localStorage.setItem("token", ID_TOKEN); // idToken
-        localStorage.setItem("accessToken", DEV_AUTH_TOKEN); // accessToken
-        setSuccess(true);
-        setTimeout(() => navigate("/"), 2000);
-        return;
-      }
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE}/auth/signin`,
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-      // 👉 真實 Cognito 登入流程
-      const res = await fetch(`${import.meta.env.VITE_API_BASE}/auth/signin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const { idToken, accessToken, refreshToken } = res.data;
 
-      if (!res.ok) throw new Error("Invalid credentials");
-      const data = await res.json();
+      // 儲存 Token 到 localStorage
+      localStorage.setItem("token", idToken);
+      console.log(idToken);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
 
-      console.log("✅ Login Response:", data);
-      localStorage.setItem("token", data.idToken);
-      localStorage.setItem("accessToken", data.accessToken);
+      // Optional：也可以記錄使用者 email
+      localStorage.setItem("userEmail", email);
+
+      // decode idToken 取得使用者 ID
+      const decoded: any = jwtDecode(idToken);
+      localStorage.setItem("userId", decoded.sub);
+
+      // 顯示成功訊息並跳轉首頁
       setSuccess(true);
       setTimeout(() => navigate("/"), 2000);
+
     } catch (err: any) {
-      setError(err.message || "Login failed");
+      console.error("❌ Login Error:", err);
+      setError(err.response?.data?.error || "Login failed");
       setOpen(true);
     }
   };
@@ -90,14 +93,14 @@ const LoginPage: React.FC = () => {
         Login
       </Button>
 
-      {/* error toast */}
+      {/* Error toast */}
       <Snackbar open={open} autoHideDuration={4000} onClose={() => setOpen(false)}>
         <Alert severity="error" onClose={() => setOpen(false)}>
           {error}
         </Alert>
       </Snackbar>
 
-      {/* success toast */}
+      {/* Success toast */}
       <Snackbar open={success} autoHideDuration={2000}>
         <Alert severity="success">
           Login successful! Redirecting...
