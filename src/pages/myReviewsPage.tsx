@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 
 interface Review {
   MovieId: string;
@@ -28,8 +29,14 @@ const MyReviewsPage: React.FC = () => {
 
   const currentUserId = localStorage.getItem("userId") || "";
 
-  const [editSuccess, setEditSuccess] = useState(false);
+  // const [editSuccess, setEditSuccess] = useState(false);
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!token || !currentUserId) {
+      navigate("/login");
+    }
+  }, [token, currentUserId, navigate]);
 
   const fetchReviews = async () => {
     try {
