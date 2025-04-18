@@ -20,6 +20,7 @@ const ReviewForm: React.FC<{ movie: BaseMovieProps }> = ({ movie }) => {
     agree: false,
     rating: 3,
     movieId: movie.id,
+    ReviewId: "",
   };
 
   const {
