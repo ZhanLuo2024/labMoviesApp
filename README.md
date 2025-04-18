@@ -1,30 +1,47 @@
-# React + TypeScript + Vite
+# TMDB Client – Movie App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a single-page movie web application developed using **React**, **TypeScript**, and **Vite**. It integrates with **The Movie Database (TMDB)** API to display real movie data, while certain pages (like reviews and fantasy movies) interact with a custom **AWS backend**.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Public Pages
+- **Home (Discover Movies)**: Filter by genre and title using dropdown and text field.
+- **Upcoming / Popular**: Lists upcoming and popular movies.
+- **Movie Detail Page**: Shows overview, genres, runtime, revenue, release date.
+- **Actor Detail Page**: Shows biography and known movies.
+- **Search Page**: Allows multi-field search (title, genre, release year range).
 
-## Expanding the ESLint configuration
+### Private (Login Required)
+- **My Reviews**: View and edit your own reviews.
+- **Create Fantasy Movie**: Submit a fictional movie using a structured form.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend**: React, TypeScript, React Router, Material UI, React Query, Axios
+- **Backend**: AWS API Gateway + Lambda + DynamoDB (custom endpoints)
+- **Authentication**: AWS Cognito (Email/Password)
+- **Deployment**: AWS S3 (Static Hosting)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Authentication
+
+- This app uses real **AWS Cognito** authentication.
+- After logging in, `token` and `userId` are stored in `localStorage`.
+- For testing, open the app in Incognito Mode and manually log in with a valid user.
+- No logout button is provided by design.
+
+## Run Locally
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Run the development server
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Notes
+- All review and fantasy movie data is stored in the author's personal AWS backend.
+
+- After the demo, the backend may be removed. Please refer to the demo video for behavior.
+
+- The login form is fully functional and wired to Cognito, but only a test account is allowed.
