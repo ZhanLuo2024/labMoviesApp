@@ -2,6 +2,8 @@
 
 This is a single-page movie web application developed using **React**, **TypeScript**, and **Vite**. It integrates with **The Movie Database (TMDB)** API to display real movie data, while certain pages (like reviews and fantasy movies) interact with a custom **AWS backend**.
 
+S3 URL: [http://movieapp-assignment-2025.s3-website-eu-west-1.amazonaws.com](http://movieapp-assignment-2025.s3-website-eu-west-1.amazonaws.com)
+
 ## Features
 
 ### Public Pages
