@@ -58,6 +58,7 @@ export interface Review {
   agree: boolean,
   rating: number,
   movieId: number,
+  ReviewId: string; 
 }
 
 

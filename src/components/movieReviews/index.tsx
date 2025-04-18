@@ -40,14 +40,14 @@ const MovieReviews: React.FC<MovieDetailsProps> = (movie) => {
                 </TableHead>
                 <TableBody>
                     {reviews.map((r: Review) => (
-                        <TableRow key={r.id}>
+                        <TableRow key={r.ReviewId}>
                             <TableCell component="th" scope="row">
                                 {r.author}
                             </TableCell>
                             <TableCell >{excerpt(r.content)}</TableCell>
                             <TableCell >
                                 <Link
-                                    to={`/reviews/${r.id}`}
+                                    to={`/reviews/${r.ReviewId}`}
                                     state={{
                                         review: r,
                                         movie: movie,
